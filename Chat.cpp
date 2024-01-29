@@ -5,6 +5,7 @@
 
 void Chat::startChat()
 {
+	info_system();
 	work_ = true;
 }
 
