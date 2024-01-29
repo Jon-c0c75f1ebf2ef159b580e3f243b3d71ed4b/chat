@@ -3,6 +3,7 @@
 #include <exception>
 #include<memory>
 #include "Message.h"
+#include "info_system.h"
 
 using namespace std;
 
