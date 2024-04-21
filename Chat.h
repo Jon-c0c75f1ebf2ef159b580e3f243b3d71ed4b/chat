@@ -1,15 +1,16 @@
 #pragma once
 #include <vector>
-#include <exception>
 #include<memory>
+#include <exception>
 #include "Message.h"
 #include "info_system.h"
+#include "Hashing.h"
 
 using namespace std;
 
 struct UserLoginEx : public exception
 {
-	const char* what() const noexcept override { return "????? ??? ???????????, ??????? ?????? ???????"; }
+	const char* what() const noexcept override { return "Error: user login is busy"; }
 };
 
 class Chat
@@ -39,4 +40,3 @@ private:
 	shared_ptr <User> getUserName(const string& name) const;
 
 }; 
-
