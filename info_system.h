@@ -4,7 +4,7 @@
 #if defined(__linux__)
 #include <sys/utsname.h> // Linux for uname()
 #elif defined(_WIN32) || defined(_WIN64)
-#include //sistem book in Windows                           //////////////////  !
+//#include //sistem book in Windows                           //////////////////  !
 #endif
 
 #define cout std::cout
