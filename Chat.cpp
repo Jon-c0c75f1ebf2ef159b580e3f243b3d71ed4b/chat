@@ -1,12 +1,14 @@
-#include <iostream>
-#include <memory>
-#include <exception>
 #include "Chat.h"
+#include <iostream>
+//#include <memory>
+//#include <exception>
+
 
 void Chat::startChat()
 {
-	info_system();
 	work_ = true;
+	Info_system info_system;
+	info_system.something();
 }
 
 shared_ptr <User> Chat::getUserLog(const string& login) const
@@ -50,8 +52,11 @@ void Chat::userLogin()
 		cin >> password;
 
 		currentUser_ = getUserLog(login);
+		
+		Hashing hashing;
+	    size_t hash_pas = hashing.hashing(password, login);
 
-		if (currentUser_ == nullptr || password != currentUser_->getPass())
+		if (currentUser_ == nullptr || hash_pas != currentUser_->getPass())
 		{
 			currentUser_ = nullptr;
 			cout << "0 - exit, or any key " << endl;
@@ -79,8 +84,11 @@ void Chat::userRegistration()
 	{
 		throw UserLoginEx();
 	}
+	
+	Hashing hashing;
+	size_t hash_pas = hashing.hashing(password, login);
 
-	User user = User(login, password, name);
+	User user = User(login, hash_pas, name);
 	userArr_.push_back(user);
 	currentUser_ = make_shared <User>(user);
 
@@ -223,4 +231,3 @@ void Chat::showAllUsers () const
 		cout << "" << endl;
 	}
 }
-
