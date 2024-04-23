@@ -9,6 +9,7 @@ void Chat::startChat()
 	work_ = true;
 	Info_system info_system;
 	info_system.something();
+	test_contetnt();
 }
 
 shared_ptr <User> Chat::getUserLog(const string& login) const
@@ -19,7 +20,7 @@ shared_ptr <User> Chat::getUserLog(const string& login) const
 		{
 			return make_shared<User>(user);
 		}
-			
+
 	}
 	return nullptr;
 }
@@ -52,9 +53,9 @@ void Chat::userLogin()
 		cin >> password;
 
 		currentUser_ = getUserLog(login);
-		
+
 		Hashing hashing;
-	    size_t hash_pas = hashing.hashing(password, login);
+		size_t hash_pas = hashing.hashing(password, login);
 
 		if (currentUser_ == nullptr || hash_pas != currentUser_->getPass())
 		{
@@ -84,7 +85,7 @@ void Chat::userRegistration()
 	{
 		throw UserLoginEx();
 	}
-	
+
 	Hashing hashing;
 	size_t hash_pas = hashing.hashing(password, login);
 
@@ -141,12 +142,12 @@ void Chat::addMessage()
 
 	if (to == "all")
 	{
-		messageArr_.push_back(Message{currentUser_->getlog(), "all", text});
+		messageArr_.push_back(Message{ currentUser_->getlog(), "all", text });
 	}
 
 	else
 	{
-		messageArr_.push_back(Message{currentUser_->getlog (), getUserName(to)->getlog(), text});
+		messageArr_.push_back(Message{ currentUser_->getlog(), getUserName(to)->getlog(), text });
 	}
 
 }
@@ -215,10 +216,10 @@ void Chat::showChat() const
 
 }
 
-void Chat::showAllUsers () const
+void Chat::showAllUsers() const
 {
 	cout << "users" << endl;
-	
+
 	for (auto& user : userArr_)
 	{
 		cout << user.getName();
@@ -230,4 +231,29 @@ void Chat::showAllUsers () const
 		}
 		cout << "" << endl;
 	}
+}
+
+void Chat::test_contetnt()
+{
+	Hashing hashing;
+
+	size_t hash_pas = hashing.hashing("123", "Jon");
+	User user = User("Jon", hash_pas, "Jon");
+	userArr_.push_back(user);
+
+	hash_pas = hashing.hashing("123", "Sam");
+	user = User("Sam", hash_pas, "Sam");
+	userArr_.push_back(user);
+
+	hash_pas = hashing.hashing("123", "Pet");
+	user = User("Pet", hash_pas, "Pet");
+	userArr_.push_back(user);
+
+	cout << "Jon - 123 Sam - 123 Pet - 123\n";
+
+	Message message("Jon", "all", "hello_everyone");
+	messageArr_.push_back(message);
+
+	message = Message("Sam", "Jon", "hello,_Jon!");
+	messageArr_.push_back(message);
 }
