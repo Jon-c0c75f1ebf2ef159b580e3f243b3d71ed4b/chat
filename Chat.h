@@ -39,4 +39,5 @@ private:
 	shared_ptr <User> getUserLog(const string& login) const;
 	shared_ptr <User> getUserName(const string& name) const;
 
-}; 
+	void test_contetnt();
+};
