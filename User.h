@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <fstream>
 using namespace std;
 
 class User
@@ -13,6 +14,21 @@ public:
 	void setName(const string& name) { name_ = name; }
 	void setPass(const size_t& password) { password_ = password; }
 
+	friend std::fstream& operator >>(std::fstream& is, User& obj) {
+		is >> obj.login_;
+		is >> obj.password_;
+		is >> obj.name_;
+		return is;
+	}
+
+	friend std::ostream& operator <<(std::ostream& os, const User& obj) {
+		os << obj.login_;
+		os << ' ';
+		os << obj.password_;
+		os << ' ';
+		os << obj.name_;
+		return os;
+	}
 
 private:
 	string login_;      //login is salt for hash of the password
