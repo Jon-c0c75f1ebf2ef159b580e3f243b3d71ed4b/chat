@@ -33,6 +33,10 @@ private:
 	void showChat() const;
 	void showAllUsers() const;
 	void addMessage();
+	void saveUsers();
+	void saveMessages();
+	void loadUsers();
+	void loadMessages();
 
 	vector <User>& getAlluser() { return userArr_; }
 	vector <Message>& getAllmessage() { return messageArr_; }
