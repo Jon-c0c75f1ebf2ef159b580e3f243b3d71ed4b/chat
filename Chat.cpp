@@ -9,7 +9,10 @@ void Chat::startChat()
 	work_ = true;
 	Info_system info_system;
 	info_system.something();
-	test_contetnt();
+	loadUsers();
+	loadMessages();
+	if (userArr_.empty())
+		test_contetnt();
 }
 
 shared_ptr <User> Chat::getUserLog(const string& login) const
@@ -180,6 +183,8 @@ void Chat::showLoginMenu()
 			break;
 		case '0':
 			work_ = false;
+			saveUsers();
+			saveMessages();
 			break;
 
 		default:
@@ -256,4 +261,66 @@ void Chat::test_contetnt()
 
 	message = Message("Sam", "Jon", "hello,_Jon!");
 	messageArr_.push_back(message);
+}
+
+void Chat::saveUsers()
+{
+	std::fstream users_file = std::fstream("users.dat", std::ios::in | std::ios::out);
+	if (!users_file) {
+		// Для создания файла используем параметр ios::trunc
+		users_file = std::fstream("users.dat", std::ios::in | std::ios::out | std::ios::trunc);
+	}
+
+	if (users_file) {
+		for (const auto& elem : userArr_) {
+			users_file << elem << "\n";
+		}
+	}
+}
+
+void Chat::saveMessages()
+{
+	std::fstream messages_file = std::fstream("messahes.dat", std::ios::in | std::ios::out);
+	if (!messages_file) {
+		// Для создания файла используем параметр ios::trunc
+		messages_file = std::fstream("messahes.dat", std::ios::in | std::ios::out | std::ios::trunc);
+	}
+
+	if (messages_file) {
+		for (const auto& elem : messageArr_) {
+			messages_file << elem << "\n";
+		}
+	}
+}
+
+void Chat::loadUsers()
+{
+	fstream file("users.dat");
+	if (file.is_open()) {
+		cout << "initialization users ... ok\n";
+		while (!file.eof()) {
+			User user("", 0, "");
+			file >> user;
+			userArr_.push_back(user);
+		}
+		file.close();
+		if (userArr_.back().getPass() == 0)
+			userArr_.pop_back();
+	}
+}
+
+void Chat::loadMessages()
+{
+	fstream file("messahes.dat");
+	if (file.is_open()) {
+		cout << "initialization messahes ... ok\n";
+		while (!file.eof()) {
+			Message message("all", "", "");
+			file >> message;
+			messageArr_.push_back(message);
+		}
+		file.close();
+		if (messageArr_.back().getFrom() == "all")
+			messageArr_.pop_back();
+	}
 }
